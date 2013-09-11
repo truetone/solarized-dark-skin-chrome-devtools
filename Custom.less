@@ -11,6 +11,7 @@
 /**********************************************/
 
 
+// Solarized colors
 @base03 : #002b36;
 @base02 : #073642;
 @base01 : #586e75;
@@ -28,7 +29,8 @@
 @cyan   : #2aa198;
 @green  : #859900;
 
-
+// Font-size
+@font-size: 14px;
 
 // For "security" purpose (it override the CSS on the page, not only the Chrome DevTools)
 body#-webkit-web-inspector {
@@ -58,7 +60,8 @@ body#-webkit-web-inspector {
 
 #console-messages a:hover,
 #console-messages .console-formatted-function,
-#console-messages .console-formatted-object {
+#console-messages .console-formatted-object,
+#console-messages .console-formatted-array {
     color: @base1 !important;
 }
 
@@ -67,6 +70,7 @@ body#-webkit-web-inspector {
 #console-messages .console-message,
 #console-messages .console-group-messages .section .header .title {
     color: @base0 !important;
+    border-top: 0 !important;
 }
 
 #console-messages .console-formatted-null,
@@ -81,6 +85,7 @@ body#-webkit-web-inspector {
 
 #console-messages .console-message, .console-user-command {
     border-bottom: 1px solid @base01 !important;
+    border-top: 0 !important;
 }
 
 #console-messages .console-user-command > .console-message-text {
@@ -118,6 +123,12 @@ body#-webkit-web-inspector {
     color: @red !important;
 }
 
+#console-messages .section .properties .name,
+#console-messages .event-properties .name,
+#console-messages .console-formatted-object .name {
+    color: @green !important;
+}
+
 #console-messages .console-user-command::before {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTMzNzdGNUZDMTA1MTFFMDgwRUZGQ0JCMjgzMzU0MTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTMzNzdGNjBDMTA1MTFFMDgwRUZGQ0JCMjgzMzU0MTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MzM3N0Y1REMxMDUxMUUwODBFRkZDQkIyODMzNTQxNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MzM3N0Y1RUMxMDUxMUUwODBFRkZDQkIyODMzNTQxNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pia6udAAAAB5SURBVHjaYvz//z8DMYAFxli9ejWI6oByK5AVhYaGIhRCgQsQGwOxIFTxe5gEE5pCVyA+C8RpQLwbqgmrwvdQxauhis6AbMamEASUkEwCabyHTWE51BQlqBNMoDSKQhckX3dCFd3DCB4g2AP16VkoGwUwEhvgAAEGAAzQHBRSxqPRAAAAAElFTkSuQmCC) !important;
 }
@@ -141,7 +152,8 @@ body#-webkit-web-inspector {
 
     #console-messages a:hover,
     #console-messages .console-formatted-function,
-    #console-messages .console-formatted-object {
+    #console-messages .console-formatted-object,
+    #console-messages .console-formatted-array {
         color: @base01 !important;
     }
 
@@ -193,7 +205,7 @@ body#-webkit-web-inspector {
 .webkit-line-number {
     background-color: @base02 !important;
     color: @base01;
-    font-size: 11px !important;
+    font-size: @font-size - 1 !important;
 }
 
 .webkit-line-content {
@@ -307,6 +319,20 @@ li.hovered:not(.selected) .selection {
 /* JavaScript
 /**********************************************/
 
+@-webkit-keyframes fadeOut {
+    0%   { background-color: @base00 }
+    100% { background-color: @base03 }
+}
+
+.webkit-highlighted-line.webkit-line-content {
+    -webkit-animation: fadeOut 2s 0s !important;
+}
+
+.webkit-html-error-message {
+    background-color: #FFD1D1 !important;
+    color: @red !important;
+}
+
 .webkit-javascript-ident {
     color: @base3 !important;
 }
@@ -359,10 +385,12 @@ li.hovered:not(.selected) .selection {
     color: @violet !important;
 }
 
+
 #elements-sidebar .webkit-css-property {
     color: @magenta !important;
 }
 
+.styles-section .styles-selector .selector-matches,
 #elements-sidebar .properties .value {
     color: @cyan !important;
 }
@@ -397,10 +425,14 @@ li.hovered:not(.selected) .selection {
 
 .styles-section .properties .child-editing > span *,
 .console-formatted-object,
-.console-formatted-node {
+.console-formatted-node,
+.console-formatted-array {
     color: @yellow !important;
 }
 
+.pane > .title {
+    font-size: @font-size - 1 !important;
+}
 .pane > .body .info,
 .placard .title {
     color: @base1 !important;
@@ -485,7 +517,7 @@ body#-webkit-web-inspector,
 .webkit-line-content,
 #elements-sidebar .child-editing {
     font-family: Inconsolata, monospace !important;
-    font-size: 12px !important;
+    font-size: @font-size !important;
     color: @base0 !important;
 }
 
@@ -519,4 +551,151 @@ body#-webkit-web-inspector,
 .webkit-html-external-link {
     color: @magenta !important;
 }
+
+/**********************************************/
+/* Codemirror
+/**********************************************/
+
+/*
+Solarized theme for code-mirror
+http://codemirror.net/demo/theme.html?solarized%20dark
+http://ethanschoonover.com/solarized
+*/
+
+/*
+Solarized color pallet
+http://ethanschoonover.com/solarized/img/solarized-palette.png
+*/
+
+/* Color scheme for code-mirror */
+
+.CodeMirror-scroll {
+  color-profile: sRGB !important;
+  rendering-intent: auto !important;
+  color: #839496 !important;
+  background-color:  #002b36 !important;
+  text-shadow: #002b36 0 1px !important;
+
+    .CodeMirror-widget {
+      text-shadow: none !important;
+    }
+
+
+    span.cm-keyword { color: #cb4b16 !important; }
+    span.cm-atom { color: #d33682 !important; }
+    span.cm-number { color: #d33682 !important; }
+    span.cm-def { color: #2aa198 !important; }
+
+    span.cm-variable { color: #268bd2 !important; }
+    span.cm-variable-2 { color: #b58900 !important; }
+    span.cm-variable-3 { color: #6c71c4 !important; }
+
+    span.cm-property { color: #2aa198 !important; }
+    span.cm-operator {color: #6c71c4 !important;}
+
+    span.cm-comment { color: #586e75 !important; font-style:italic !important; }
+
+    span.cm-string { color: #859900 !important; }
+    span.cm-string-2 { color: #b58900 !important; }
+
+    span.cm-meta { color: #859900 !important; }
+    span.cm-error,
+    span.cm-invalidchar {
+      color: #586e75 !important;
+      border-bottom: 1px dotted #dc322f !important;
+    }
+    span.cm-qualifier { color: #b58900 !important; }
+    span.cm-builtin { color: #d33682 !important; }
+    span.cm-bracket { color: #cb4b16 !important; }
+    .CodeMirror-matchingbracket { color: #859900 !important; }
+    .CodeMirror-nonmatchingbracket { color: #dc322f !important; }
+    span.cm-tag { color: #93a1a1 !important; }
+    span.cm-attribute {  color: #2aa198 !important; }
+    span.cm-header { color: #586e75 !important; }
+    span.cm-quote { color: #93a1a1 !important; }
+    span.cm-hr {
+      color: transparent !important;
+      border-top: 1px solid #586e75 !important;
+      display: block !important;
+    }
+    span.cm-link { color: #93a1a1 !important; cursor: pointer !important; }
+    span.cm-special { color: #6c71c4 !important; }
+    span.cm-em {
+      color: #999 !important;
+      text-decoration: underline !important;
+      text-decoration-style: dotted !important;
+    }
+    span.cm-strong { color: #eee !important; }
+    span.cm-tab:before {
+      content: "➤" !important;   /*visualize tab character*/
+      color: #586e75 !important;
+    }
+
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #386774 !important;
+      color: inherit !important;
+    }
+
+    ::selection {
+      background: #386774 !important;
+      color: inherit !important;
+    }
+
+    .CodeMirror-selected {
+      background: #586e75 !important;
+    }
+
+
+
+    /* Editor styling */
+
+
+
+    /* Little shadow on the view-port of the buffer view */
+    .CodeMirror-scroll.CodeMirror {
+      box-shadow: inset 7px 0 12px -6px #000 !important;
+    }
+
+    /* Gutter border and some shadow from it  */
+    .CodeMirror-gutter {
+      border-right: 1px solid !important;
+      background: #073642 !important;
+      border-color: #00232c !important;
+    }
+
+    .CodeMirror-linenumber {
+      text-shadow: #021014 0 -1px !important;
+    }
+
+    /* Common */
+    .CodeMirror-linenumber {
+      color: #586e75 !important;
+    }
+
+    .CodeMirror-gutter .CodeMirror-gutter-text {
+      color: #586e75 !important;
+    }
+
+    .CodeMirror-lines {
+      padding-left: 5px !important;
+    }
+
+    .CodeMirror-lines .CodeMirror-cursor {
+      border-left: 1px solid #819090 !important;
+    }
+
+    /*
+    Active line. Negative margin compensates left padding of the text in the
+    view-port
+    */
+    .activeline {
+      margin-left: -20px !important;
+    }
+
+    .activeline {
+      background: rgba(255, 255, 255, 0.05) !important;
+
+    }
+}
+
 }
